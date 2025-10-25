@@ -26,7 +26,8 @@ def run_silver_transformation():
                 hour INTEGER,
                 minute INTEGER,
                 day_of_week INTEGER,
-                is_weekend BOOLEAN
+                is_weekend BOOLEAN,
+                season INTEGER
             )
         """)
         # Fact Power System
@@ -68,7 +69,13 @@ def run_silver_transformation():
                 CASE 
                     WHEN EXTRACT(DOW FROM minutes1_utc) IN (0, 6) THEN TRUE 
                     ELSE FALSE 
-                END as is_weekend
+                END as is_weekend,
+                CASE 
+                    WHEN EXTRACT(MONTH FROM fs.time_id) IN (12, 1, 2) THEN 0  -- Winter
+                    WHEN EXTRACT(MONTH FROM fs.time_id) IN (3, 4, 5) THEN 1   -- Spring
+                    WHEN EXTRACT(MONTH FROM fs.time_id) IN (6, 7, 8) THEN 2   -- Summer
+                    ELSE 3                                                    -- Fall
+                END as season
             FROM bronze_energy_data.power_system_raw
             WHERE minutes1_utc > '{last_timestamp}'
             ON CONFLICT (time_id) DO NOTHING
