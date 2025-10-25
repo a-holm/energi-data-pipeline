@@ -71,9 +71,9 @@ def run_silver_transformation():
                     ELSE FALSE 
                 END as is_weekend,
                 CASE 
-                    WHEN EXTRACT(MONTH FROM fs.time_id) IN (12, 1, 2) THEN 0  -- Winter
-                    WHEN EXTRACT(MONTH FROM fs.time_id) IN (3, 4, 5) THEN 1   -- Spring
-                    WHEN EXTRACT(MONTH FROM fs.time_id) IN (6, 7, 8) THEN 2   -- Summer
+                    WHEN EXTRACT(MONTH FROM minutes1_utc) IN (12, 1, 2) THEN 0  -- Winter
+                    WHEN EXTRACT(MONTH FROM minutes1_utc) IN (3, 4, 5) THEN 1   -- Spring
+                    WHEN EXTRACT(MONTH FROM minutes1_utc) IN (6, 7, 8) THEN 2   -- Summer
                     ELSE 3                                                    -- Fall
                 END as season
             FROM bronze_energy_data.power_system_raw
