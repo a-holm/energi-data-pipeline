@@ -60,8 +60,8 @@ def run_bronze_pipeline():
     pipelines_dir = project_root / ".dlt" / "pipeline_metadata"
 
     pipeline = dlt.pipeline(
-        pipeline_name="energy_bronze",
-        destination="duckdb", #lagrer til en fil som heter energy_bronze.duckdb
+        pipeline_name="energy",
+        destination="duckdb", #lagrer til en fil som heter energy.duckdb
         dataset_name="bronze_energy_data",
         pipelines_dir=str(pipelines_dir)
     )

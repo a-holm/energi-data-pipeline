@@ -1,5 +1,4 @@
 import dlt
-import duckdb
 from pathlib import Path
 from datetime import datetime
 
@@ -10,8 +9,8 @@ def run_silver_transformation():
     """
     # Koble til bronze DuckDB database
     bronze_db = dlt.pipeline(
-        pipeline_name="energy_bronze",
-        destination=dlt.destinations.duckdb("energy_bronze.duckdb"),
+        pipeline_name="energy",
+        destination=dlt.destinations.duckdb("energy.duckdb"),
         dataset_name="bronze_energy_data"
     ).sql_client()
     
